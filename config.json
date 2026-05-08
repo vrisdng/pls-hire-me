@@ -1,0 +1,36 @@
+{
+  "profile": {
+    "education": "Year 3 Computer Science student at the National University of Singapore (NUS)",
+    "experience": "6-month internship",
+    "skills": ["React", "TypeScript", "JavaScript", "Swift", "SwiftUI", "C"],
+    "career_level": "Intern/Fresh Grad/Associate",
+    "preferences": "Looking for Architect internships or part-time developer jobs. I am interested in system design, infrastructure, and building scalable solutions. I value roles with strong engineering culture."
+  },
+  "search": {
+    "keywords": [
+      "Architect Intern",
+      "Part time developer",
+      "Software Engineer Intern",
+      "Systems Architect",
+      "Infrastructure",
+      "Vibecoder"
+    ],
+    "locations": [
+      "Singapore",
+      "London",
+      "Amsterdam"
+    ],
+    "results_wanted_per_location": 10,
+    "hours_old": 24,
+    "title_must_contain": [
+      "Intern",
+      "Internship",
+      "Fresh Grad",
+      "Part time",
+      "Part-time"
+    ]
+  },
+  "notion": {
+    "university_name_for_connections": "NUS"
+  }
+}
