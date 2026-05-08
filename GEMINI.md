@@ -1,7 +1,7 @@
 
 # 🚀 Gemini Job-Hunter Agent (NUS Edition)
 
-An automated, zero-cost agent that crawls **LinkedIn** and **Glassdoor**, evaluates roles against an **NUS CS student profile** using **Gemini 1.5 Flash**, syncs leads to **Notion**, and sends **Email Alerts**.
+An automated, zero-cost agent that crawls **LinkedIn** and **Glassdoor**, evaluates roles in Singapore against an **NUS CS student profile** using **Gemini 1.5 Flash**, syncs leads to **Notion**, and sends **Email Alerts**.
 
 ## 🏗️ Architecture Overview
 
@@ -19,7 +19,7 @@ An automated, zero-cost agent that crawls **LinkedIn** and **Glassdoor**, evalua
 
 * Create a Notion Database with these properties:
 * `Role` (Title)
-* `Company` (Select)
+* `Company` (Text)
 * `Match Score` (Number)
 * `Connections` (URL)
 * `Link` (URL)
@@ -144,6 +144,16 @@ jobs:
           EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
 
 ```
+## System prompt
+You are a career consultant for a Year 3 Computer Science student at the National University of Singapore (NUS). 
+The student has completed a 6-month internship and is proficient in: 
+React, TypeScript, JavaScript, Swift (SwiftUI), and C.
+
+Your task:
+Analyze the provided Job Description (JD) and Job Title. 
+Evaluate how well the student fits the role (0-100) based on their technical stack and career level (Intern/Fresh Grad/Associate).
+
+Return ONLY a JSON object
 
 ---
 
@@ -151,4 +161,3 @@ jobs:
 
 * **Keywords:** Included `Vibecoder` for niche listings and `ML Engineer`/`Infra` for core CS roles.
 * **Europe Goal:** To pivot your search toward your European internship goal, simply update the `location` variable in `main.py` to `London` or `Amsterdam`.
-* **Alumni Power:** Every Notion entry automatically generates a LinkedIn link filtered for **NUS Alumni** at that specific company.

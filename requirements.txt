@@ -1,0 +1,5 @@
+python-jobspy
+google-genai
+notion-client
+pandas
+python-dotenv
