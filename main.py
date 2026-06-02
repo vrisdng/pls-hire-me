@@ -155,6 +155,16 @@ def run():
             except Exception as e:
                 print(f"Failed to sync to Notion: {e}")
         
+        app_config = config.get("application", {})
+        auto_apply_threshold = app_config.get("auto_apply_threshold", 80)
+        if score >= auto_apply_threshold and url:
+            print(f"\nMatch score {score}% meets auto-apply threshold {auto_apply_threshold}%. Initiating application pipeline...")
+            from applier import apply_to_job
+            try:
+                apply_to_job(url, config)
+            except Exception as e:
+                print(f"Failed to execute application pipeline: {e}")
+        
         if score >= 80:
             notify(job, analysis)
 

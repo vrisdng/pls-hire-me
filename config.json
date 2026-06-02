@@ -1,19 +1,32 @@
 {
   "profile": {
     "education": "Year 3 Computer Science student at the National University of Singapore (NUS)",
-    "experience": "6-month internship",
-    "skills": ["React", "TypeScript", "JavaScript", "Swift", "SwiftUI", "C"],
+    "experience": "AI, ML, Fullstack Software Engineer, Fintech",
+    "skills": [
+      "React",
+      "TypeScript",
+      "JavaScript",
+      "Swift",
+      "SwiftUI",
+      "C"
+    ],
     "career_level": "Intern/Fresh Grad/Associate",
-    "preferences": "Looking for Architect internships or part-time developer jobs. I am interested in system design, infrastructure, and building scalable solutions. I value roles with strong engineering culture."
+    "preferences": "Looking for internships or part-time developer jobs. I am interested in system design, infrastructure, and building scalable solutions. I value roles with strong engineering culture."
   },
   "search": {
     "keywords": [
-      "Architect Intern",
       "Part time developer",
-      "Software Engineer Intern",
+      "Software Engineer",
       "Systems Architect",
       "Infrastructure",
-      "Vibecoder"
+      "Vibecoder",
+      "Backend Engineer",
+      "Frontend Engineer",
+      "AI Engineer",
+      "ML Engineer",
+      "Product Designer",
+      "Full Stack Engineer",
+      "Agent Engineer"
     ],
     "locations": [
       "Singapore",
@@ -32,5 +45,21 @@
   },
   "notion": {
     "university_name_for_connections": "NUS"
+  },
+  "application": {
+    "resume_path": "NGOCMAI_RESUME_MAY.pdf",
+    "mode": "review",
+    "auto_apply_threshold": 80,
+    "personal_details": {
+      "first_name": "Mai",
+      "last_name": "Duong",
+      "email": "dngmai.vris@gmail.com",
+      "phone": "+6587411615",
+      "github": "https://github.com/vrisdng",
+      "linkedin": "https://www.linkedin.com/in/mai-duong-526927317/",
+      "portfolio": "http://moworld.me/",
+      "work_authorization": "I will need sponsorship.",
+      "citizenship": "international/Others (I'm not Singaporean/PR)"
+    }
   }
 }

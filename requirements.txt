@@ -3,3 +3,6 @@ google-genai
 notion-client
 pandas
 python-dotenv
+playwright
+pypdf
+beautifulsoup4

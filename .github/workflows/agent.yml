@@ -15,6 +15,8 @@ jobs:
           python-version: '3.10'
       - name: Install dependencies
         run: pip install -r requirements.txt
+      - name: Install Playwright browsers
+        run: playwright install chromium
       - name: Run agent
         run: python main.py
         env:
