@@ -57,7 +57,7 @@ def analyze_match(title, jd, company):
         return {"score": 0, "reason": "Error parsing response", "skills_missing": []}
 
 # 2. Email Notification
-def notify(job, analysis):
+def notify(job, app_status):
     email_addr = os.environ.get("EMAIL_ADDRESS")
     email_pass = os.environ.get("EMAIL_APP_PASSWORD")
     if not email_addr or not email_pass:
@@ -65,8 +65,8 @@ def notify(job, analysis):
         return
 
     msg = EmailMessage()
-    msg.set_content(f"Match: {analysis.get('score')}%\nReason: {analysis.get('reason')}\nMissing Skills: {', '.join(analysis.get('skills_missing', []))}\nLink: {job.get('job_url')}")
-    msg['Subject'] = f"🚀 {analysis.get('score')}% Match: {job.get('title')} @ {job.get('company')}"
+    msg.set_content(f"Job: {job.get('title')} at {job.get('company')}\nStatus: {app_status}\nLink: {job.get('job_url')}")
+    msg['Subject'] = f"🚀 Application Status: {app_status} - {job.get('title')} @ {job.get('company')}"
     msg['From'], msg['To'] = email_addr, email_addr
     
     try:
@@ -127,9 +127,18 @@ def run():
         url = str(job.get('job_url', ''))
         date_posted = str(job.get('date_posted', ''))
         
-        analysis = analyze_match(title, description, company)
-        score = analysis.get('score', 0)
-        print(f"[{score}%] {title} at {company} - {analysis.get('reason')}")
+        print(f"Processing: {title} at {company}")
+        
+        # Run application pipeline
+        app_status = "Not Applied"
+        if url:
+            print(f"\nInitiating application pipeline for {title}...")
+            from applier import apply_to_job
+            try:
+                app_status = apply_to_job(url, config)
+            except Exception as e:
+                print(f"Failed to execute application pipeline: {e}")
+                app_status = "Failed (Exception)"
         
         # Sync to Notion
         if notion:
@@ -140,9 +149,9 @@ def run():
             properties = {
                 "Role": {"title": [{"text": {"content": title[:2000]}}]},
                 "Company": {"rich_text": [{"text": {"content": company[:2000]}}]},
-                "Match Score": {"number": score},
                 "Connections": {"url": connections_url[:2000]},
-                "Link": {"url": url[:2000]}
+                "Link": {"url": url[:2000]},
+                "Status": {"select": {"name": app_status}}
             }
             if len(date_posted) >= 10 and date_posted.lower() not in ["nan", "nat", "none"]:
                 properties["Date"] = {"date": {"start": date_posted[:10]}}
@@ -155,18 +164,8 @@ def run():
             except Exception as e:
                 print(f"Failed to sync to Notion: {e}")
         
-        app_config = config.get("application", {})
-        auto_apply_threshold = app_config.get("auto_apply_threshold", 80)
-        if score >= auto_apply_threshold and url:
-            print(f"\nMatch score {score}% meets auto-apply threshold {auto_apply_threshold}%. Initiating application pipeline...")
-            from applier import apply_to_job
-            try:
-                apply_to_job(url, config)
-            except Exception as e:
-                print(f"Failed to execute application pipeline: {e}")
-        
-        if score >= 80:
-            notify(job, analysis)
+        if app_status in ["Applied", "Review Required"]:
+            notify(job, app_status)
 
 if __name__ == "__main__":
     run()

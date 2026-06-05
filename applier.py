@@ -291,7 +291,7 @@ def apply_to_job(job_url, config_data):
         except Exception as err:
             print(f"Failed to load page directly: {err}")
             browser.close()
-            return False
+            return "Failed (Load Error)"
             
         # Follow job board apply button redirects
         page = handle_job_board_redirects(page)
@@ -356,7 +356,7 @@ def apply_to_job(job_url, config_data):
             except Exception as ss_err:
                 print(f"Failed to save screenshot: {ss_err}")
             browser.close()
-            return False
+            return "Skipped (No Form)"
             
         print(f"Extracted {len(elements)} input elements. Mapping using Gemini...")
         
@@ -366,13 +366,13 @@ def apply_to_job(job_url, config_data):
         if mapping.get("requires_account"):
             print("Page requires account creation/login. Skipping as per configuration.")
             browser.close()
-            return False
+            return "Skipped (Account Required)"
             
         actions = mapping.get("actions", [])
         if not actions:
             print("No form mapping actions returned by Gemini.")
             browser.close()
-            return False
+            return "Failed (Mapping Error)"
             
         # Execute form filling actions
         execute_form_actions(page, actions, resume_abs_path)
@@ -388,7 +388,7 @@ def apply_to_job(job_url, config_data):
             print("="*80 + "\n")
             input() # Wait for user to press enter in console
             browser.close()
-            return True
+            return "Review Required"
         else:
             # Auto submit mode
             print("Auto mode active. Attempting to locate and click submit button...")
@@ -420,13 +420,13 @@ def apply_to_job(job_url, config_data):
                     time.sleep(5)
                     print(f"Completed submission. Final page url: {page.url}")
                     browser.close()
-                    return True
+                    return "Applied"
                 else:
                     print("Could not find a clear Submit button. Leaving browser open for review.")
                     input("Press ENTER to close the browser...")
                     browser.close()
-                    return False
+                    return "Failed (No Submit Button)"
             except Exception as e:
                 print(f"Error during auto-submission: {e}")
                 browser.close()
-                return False
+                return "Failed (Exception)"
